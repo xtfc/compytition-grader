@@ -1,4 +1,3 @@
-compytition-grader
-==================
+# Compytition Grader
 
-Grading component of Compytition
+Automatic grading component of [Compytition](https://github.com/scizzorz/compytition).
