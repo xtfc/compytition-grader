@@ -50,7 +50,6 @@ int daemonize(void) {
 	}
 
 	else if (pid > 0) {
-		fprintf(stderr, "Autograder PID: %d\n", pid);
 		exit(EXIT_SUCCESS);
 	}
 

@@ -8,7 +8,9 @@
  * ========================================================================= */
 #include "common.h"
 #include "daemon.h"
+#include "log.h"
 #include <stdio.h>
+#include <unistd.h>
 
 /* Application entry point. */
 int main(int argc, const char *argv[]) {
@@ -21,6 +23,8 @@ int main(int argc, const char *argv[]) {
 		fprintf(stderr, "Failed to daemonize.\n");
 		return 1;
 	}
+
+	log_msg("autograder started; pid=%d", getpid());
 
 	return 0;
 }
