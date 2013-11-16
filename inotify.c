@@ -62,7 +62,7 @@ static int init(struct notify_backend *backend, const char *pathname) {
 		return -2;
 	}	
 
-	if ((wd = inotify_add_watch(fd, pathname, IN_MODIFY)) < 0) {
+	if ((wd = inotify_add_watch(fd, pathname, IN_CLOSE_WRITE | IN_ATTRIB)) < 0) {
 		dperror("inotify_add_watch");
 		close(fd);
 		return -3;
@@ -77,7 +77,9 @@ static int init(struct notify_backend *backend, const char *pathname) {
 /* Checks if inotify has any events for us. Blocks on input. */
 static int next(struct notify_backend *backend, const char **name) {
 	struct inotify_private *opaque = (struct inotify_private*) (backend->opaque);
+	struct inotify_event *event = (struct inotify_event*) (opaque->buf);
 	int ret;
+
 
 	/* TODO: Handle short reads from inotify. */
 	/* TODO: It shouldn't ever happen, but... */
