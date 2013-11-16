@@ -33,7 +33,7 @@ const struct notify_backend inotify_backend = {
 static int deinit(struct notify_backend *backend) {
 	struct inotify_private *opaque = (struct inotify_private*) (backend->opaque);
 
-	close(opaque->wd);
+	inotify_rm_watch(opaque->fd, opaque->wd);
 	close(opaque->fd);
 	free(opaque);
 	return 0;
