@@ -22,17 +22,18 @@ int log_msg(const char *fmt, ...) {
 
 	/* Timestamp the log message, if possible. */
 	if ((ltime = time(NULL)) != (time_t)-1) {
-		char *time = ctime(&ltime), *end;
 		char timestr[32];
+		char *newline;
 
-		/* Remove the trailing '\n' from ctime's  return. */
-		strncpy(timestr, time, sizeof(timestr));
+		if (ctime_r(&ltime, timestr) != NULL) {
+			timestr[sizeof(timestr) - 1] = '\0';
 
-		timestr[sizeof(timestr) - 1] = '\0';
-		if ((end = strchr(timestr, '\n')))
-			*end = '\0';
+			/* Remove the trailing '\n' from ctime_r's return. */
+			if ((newline = strchr(timestr, '\n')) != NULL)
+				*newline = '\0';
 
-		ret = fprintf(stderr, "%s: ", timestr);
+			ret = fprintf(stderr, "%s: ", timestr);
+		}
 	}
 
 	va_start(ap, fmt);
