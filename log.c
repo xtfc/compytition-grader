@@ -26,10 +26,10 @@ int log_msg(const char *fmt, ...) {
 		char timestr[32];
 
 		/* Remove the trailing '\n' from ctime's  return. */
-		strncpy(timestr, ctime(&ltime), sizeof(timestr));
+		strncpy(timestr, time, sizeof(timestr));
 
 		timestr[sizeof(timestr) - 1] = '\0';
-		if (end = strchr(timestr, '\n'))
+		if ((end = strchr(timestr, '\n')))
 			*end = '\0';
 
 		ret = fprintf(stderr, "%s: ", timestr);

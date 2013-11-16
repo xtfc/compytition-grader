@@ -38,10 +38,10 @@ LDFLAGS := -Wl,-O1
 # ============================================================================
 .PHONY: clean
 all: $(TARGET)
-all: CFLAGS := -DNDEBUG
+all: CFLAGS += -DNDEBUG -O2
 
 debug: $(TARGET)
-debug: CFLAGS := -ggdb3 -g3
+debug: CFLAGS += -ggdb3 -g3
 
 # ============================================================================
 #  Build targets.
