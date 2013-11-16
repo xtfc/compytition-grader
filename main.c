@@ -8,14 +8,18 @@
  * ========================================================================= */
 #include "common.h"
 #include "daemon.h"
+#include "inotify.h"
 #include "log.h"
+#include "notify.h"
 #include <stdio.h>
 #include <unistd.h>
 
 /* Application entry point. */
 int main(int argc, const char *argv[]) {
-	if (argc != 1) {
-		printf("Usage: %s\n", argv[0]);
+	struct notify_backend notifier = inotify_backend;
+
+	if (argc != 2) {
+		printf("Usage: %s <path>\n", argv[0]);
 		return 0;
 	}
 
@@ -24,8 +28,14 @@ int main(int argc, const char *argv[]) {
 		return 1;
 	}
 
+	if (notifier.init(&notifier, argv[1]) < 0) {
+		fprintf(stderr, "Failed to start notifier.\n");
+		return 2;
+	}
+
 	log_msg("autograder started; pid=%d", getpid());
 
+	notifier.deinit(&notifier);
 	return 0;
 }
 
