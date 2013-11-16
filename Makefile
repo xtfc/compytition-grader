@@ -30,8 +30,8 @@ YELLOW=$(shell tput setaf 3)
 ECHO=/usr/bin/printf "%s\n"
 MKDIR = /bin/mkdir -p
 
-CFLAGS := -Wall -Wextra -pedantic -ansi -D_POSIX_C_SOURCE
-LDFLAGS := -Wl,-O1
+CFLAGS := -Wall -Wextra -pedantic -ansi -D_POSIX_C_SOURCE -pthread
+LDFLAGS := -Wl,-O1 -pthread
 
 # ============================================================================
 #  Build rules.
