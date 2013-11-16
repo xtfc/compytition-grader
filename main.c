@@ -33,7 +33,19 @@ int main(int argc, const char *argv[]) {
 		return 2;
 	}
 
-	log_msg("autograder started; pid=%d", getpid());
+	log_msg("autograder: started; pid=%d", getpid());
+
+	/* Main loop. */
+	while (1) {
+		const char *path;
+
+		/* inotify's read can return EINTR. */
+		/* For now, we'll just try reading again. */
+		if (notifier.next(&notifier, &path))
+			continue;
+
+		log_msg("autograder: got submission: %s", path);
+	}
 
 	notifier.deinit(&notifier);
 	return 0;

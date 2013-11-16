@@ -13,6 +13,7 @@
 struct notify_backend {
 	int (*const deinit)(struct notify_backend *);
 	int (*const init)(struct notify_backend *, const char *pathname);
+	int (*const next)(struct notify_backend *, const char **name);
 	const char *backend_name;
 	void *opaque;
 };
