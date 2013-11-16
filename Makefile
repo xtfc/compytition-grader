@@ -33,6 +33,9 @@ MKDIR = /bin/mkdir -p
 CFLAGS := -Wall -Wextra -pedantic -ansi -D_POSIX_C_SOURCE -pthread
 LDFLAGS := -Wl,-O1 -pthread
 
+# Not entirely POSIX conformant...
+CFLAGS += -D_BSD_SOURCE
+
 # ============================================================================
 #  Build rules.
 # ============================================================================
