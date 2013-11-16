@@ -11,15 +11,23 @@
 #include <limits.h>
 #include <pthread.h>
 
+struct request_pool;
+
 struct request {
 	pthread_t thread;
+
+	struct request_pool *pool;
 	char name[NAME_MAX];
 };
 
 struct request_pool {
-	struct request *requests;
+	pthread_mutex_t lock;
+	pthread_cond_t cond;
 	unsigned size;
 	unsigned cur;
+
+	struct request **freelist;
+	struct request *requests;
 };
 
 int create_request_pool(struct request_pool *pool, unsigned size);
